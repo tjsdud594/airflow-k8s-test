@@ -46,30 +46,20 @@ dag = DAG(
 #     "hive_conn_spark.yaml").read()
 
 submit = SparkKubernetesOperator(
-    task_id='spark_hive_submit',
-    namespace="guru-tenant",
-    application_file="hive_conn_test.yaml",
-    kubernetes_conn_id="guru",
-    # env_from=configmaps
+    task_id='spark_submit',
+    namespace="airflow",
+    application_file="sparkapplication/basic_spark.yaml",
+    kubernetes_conn_id="microk8s",
     do_xcom_push=True,
     dag=dag,
-    # service_account_name="hpe-guru-tenant",
-    api_group="sparkoperator.hpe.com",
-    # api_group="sparkoperator.k8s.io",
-    api_version="v1beta2"
-    # enable_impersonation_from_ldap_user=False
 )
 
 sensor = SparkKubernetesSensor(
-    task_id='spark_hive_monitor',
-    namespace="guru-tenant",
-    application_name="{{ task_instance.xcom_pull(task_ids='spark_hive_submit')['metadata']['name'] }}",
-    kubernetes_conn_id="guru",
+    task_id='spark_monitor',
+    namespace="airflow",
+    application_name="{{ task_instance.xcom_pull(task_ids='spark_submit')['metadata']['name'] }}",
+    kubernetes_conn_id="microk8s",
     dag=dag,
-    # service_account_name="hpe-guru-tenant",
-    api_group="sparkoperator.hpe.com"
-    # api_group="sparkoperator.k8s.io",
-    # attach_log=True
 )
 
 submit >> sensor
