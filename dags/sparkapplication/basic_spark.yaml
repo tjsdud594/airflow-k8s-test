@@ -23,7 +23,7 @@ spec:
   imagePullPolicy: IfNotPresent
   imagePullSecrets:
     - imagepull
-  mainApplicationFile: local:///...
+  mainApplicationFile: https://raw.githubusercontent.com/tjsdud594/airflow-k8s-test/refs/heads/main/dags/spark_dag.py
   mode: cluster
   restartPolicy:
     type: Never
