@@ -1,0 +1,38 @@
+apiVersion: sparkoperator.k8s.io/v1beta2
+kind: SparkApplication
+metadata:
+  name: basic-spark
+  namespace: spark
+spec:
+  driver:
+    coreLimit: "1"
+    cores: 1
+    labels:
+      version: 3.5.1
+    memory: 2G
+    serviceAccount: spark-operator-spark
+  executor:
+    coreLimit: "1"
+    cores: 1
+    instances: 1
+    labels:
+      version: 3.5.1
+    memory: 1G
+    serviceAccount: spark-operator-spark
+  image: sdaberdaku/spark-glue-python:v3.5.1-python3.10.14
+  imagePullPolicy: IfNotPresent
+  imagePullSecrets:
+    - imagepull
+  mainApplicationFile: local:///...
+  mode: cluster
+  restartPolicy:
+    type: Never
+  sparkConf:
+    spark.eventLog.enabled: "true"
+    spark.hadoop.fs.s3a.connection.ssl.enabled: "false"
+    spark.hadoop.fs.s3a.endpoint: "https://play.min.io"
+    spark.hadoop.fs.s3a.access.key: "Q3AM3UQ867SPQQA43P2F"
+    spark.hadoop.fs.s3a.secret.key: "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
+    spark.hadoop.fs.s3a.impl: "org.apache.hadoop.fs.s3a.S3AFileSystem"
+  sparkVersion: 3.5.1
+  type: Python
