@@ -23,7 +23,8 @@ spec:
   imagePullPolicy: IfNotPresent
   imagePullSecrets:
     - imagepull
-  mainApplicationFile: s3a://syryu-spark-test/spark_files/basic_spark.py
+#  mainApplicationFile: s3a://syryu-spark-test/spark_files/basic_spark.py
+  mainApplicationFile: https://raw.githubusercontent.com/tjsdud594/airflow-k8s-test/refs/heads/main/dags/pyspark_source/basic_spark.py
   mode: cluster
   restartPolicy:
     type: Never
