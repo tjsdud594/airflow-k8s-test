@@ -47,7 +47,7 @@ dag = DAG(
 
 submit = SparkKubernetesOperator(
     task_id='spark_submit',
-    namespace="airflow",
+    namespace="spark",
     application_file="sparkapplication/basic_spark.yaml",
     kubernetes_conn_id="microk8s",
     do_xcom_push=True,
